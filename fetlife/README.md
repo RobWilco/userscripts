@@ -13,4 +13,4 @@ Adds image preview and love toggling to photos on FetLife.
 * [![](https://raw.github.com/robwilco/userscripts/master/_resources/greasemonkey.png) Greasemonkey](https://addons.mozilla.org/firefox/addon/greasemonkey/) on [![](https://raw.github.com/robwilco/userscripts/master/_resources/firefox.png) Mozilla Firefox](http://www.mozilla.org/en-US/firefox/fx/#desktop) desktop and
 
 * [![](https://raw.github.com/robwilco/userscripts/master/_resources/tampermonkey.png) Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) on
-  [![](https://raw.github.com/robwilco/userscripts/master/_resources/chrome.png) Google Chrome](https://www.google.com/chrome/browser/desktop/) desktop.
+  [![](https://raw.github.com/robwilco/userscripts/master/_resources/google_chrome.png) Google Chrome](https://www.google.com/chrome/browser/desktop/) desktop.
