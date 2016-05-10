@@ -4,6 +4,8 @@
 
 Adds image preview and love toggling to photos on FetLife.
 
+Based on the original [FetLife Lightbox](http://userscripts-mirror.org/scripts/show/175687) by wjw_.
+
 [![Install](https://raw.github.com/robwilco/userscripts/master/_resources/install_button.png)](https://github.com/robwilco/userscripts/raw/master/fetlife/lightbox.user.js)
 [![Source](https://raw.github.com/robwilco/userscripts/master/_resources/source_button.png)](https://github.com/robwilco/userscripts/blob/master/fetlife/lightbox.user.js)
 [![Support](https://raw.github.com/robwilco/userscripts/master/_resources/support_button.png)](https://github.com/robwilco/userscripts/issues)
