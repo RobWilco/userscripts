@@ -6,7 +6,7 @@
 // @license     GNU GPLv3
 // @include     https://fetlife.com/*
 // @require     https://code.jquery.com/jquery-2.2.3.min.js
-// @version     1
+// @version     1.0.1
 // ==/UserScript==
 
 // Based on FetLife Lightbox by wjw_
@@ -134,9 +134,11 @@ var FLCB = function() {
       $(this).addClass('flcb_user');
 
       // Skip if there aren't any img elements,
+      // or if it's an avatar next to a "new comment" text box,
       // or if it's an avatar from K&P and the like (can't make this work yet),
       // or if it's the "avatar missing" image.
       if ($(this_).children('img').length < 1 ||
+          $(this_).hasClass('new_comment') ||
           $(this_).hasClass('mbs') ||
 	      $(this_).children('img').attr('src').indexOf('avatar_missing') > -1)
 	    return false;
