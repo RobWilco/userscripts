@@ -5,8 +5,7 @@
 // @namespace   robwilco.fetlife.lightbox
 // @license     GNU GPLv3
 // @include     https://fetlife.com/*
-// @require     https://code.jquery.com/jquery-2.2.3.min.js
-// @version     1.0.1
+// @version     1.0.2
 // ==/UserScript==
 
 // Based on FetLife Lightbox by wjw_
