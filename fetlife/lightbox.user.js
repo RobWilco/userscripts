@@ -5,7 +5,7 @@
 // @namespace   robwilco.fetlife.lightbox
 // @license     GNU GPLv3
 // @include     https://fetlife.com/*
-// @version     1.0.2
+// @version     1.0.3
 // ==/UserScript==
 
 // Based on FetLife Lightbox by wjw_
@@ -134,11 +134,10 @@ var FLCB = function() {
 
       // Skip if there aren't any img elements,
       // or if it's an avatar next to a "new comment" text box,
-      // or if it's an avatar from K&P and the like (can't make this work yet),
       // or if it's the "avatar missing" image.
+      //debugger;
       if ($(this_).children('img').length < 1 ||
           $(this_).hasClass('new_comment') ||
-          $(this_).hasClass('mbs') ||
 	      $(this_).children('img').attr('src').indexOf('avatar_missing') > -1)
 	    return false;
 
@@ -147,6 +146,10 @@ var FLCB = function() {
         $(this_).children('.flcb_popup').show();
         return false;
       }
+
+      // Story and K&P entries will cut off avatar pics. This fixes that.
+      $(this_).parents('.story').addClass('flcb_overflowfix');
+      $(this_).parents('.kpbox').addClass('flcb_overflowfix');
 
       // Change the filename to use the large version. Strip the query.
       var src = $(this_).children('img').attr('src');
@@ -208,6 +211,7 @@ css += ".flcb_popup em:hover { color: #999999; }";
 css += ".flcb_popup em:active { -moz-transform: scale(0.8); -webkit-transform: scale(0.8); transform: scale(0.8); }";
 css += ".flcb_popup em.liked { color: #DD0000; }";
 css += ".kpbox.flcb_overflowfix { overflow: visible; }";
+css += ".story.flcb_overflowfix { overflow: visible !important; }";
 css += ".flcb_user { position: relative; }";
 css += ".flcb_user img { max-width: 400px; }";
 
@@ -217,3 +221,4 @@ $(document).ready(function(){
 
   $('head').append('<style type="text/css">' + css + '</style>');
 });
+
