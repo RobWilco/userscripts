@@ -5,7 +5,7 @@
 // @namespace   robwilco.fetlife.lightbox
 // @license     GNU GPLv3
 // @include     https://fetlife.com/*
-// @version     1.0.3
+// @version     1.0.4
 // ==/UserScript==
 
 // Based on FetLife Lightbox by wjw_
@@ -46,7 +46,7 @@ var FLCB = function() {
       // Add the overflow fix to K&P's box
       $(this_).parents('.kpbox').addClass('flcb_overflowfix');
 
-      // Construct the 'like' URL
+      // Construct the 'like' URL - returns lots of helpful info!
       var likeUrl = $(this).attr('href').split('/');
       likeUrl = likeUrl[likeUrl.length-1];
       likeUrl = "https://fetlife.com/pictures/" + likeUrl + "/likes";
@@ -81,7 +81,6 @@ var FLCB = function() {
                 height: $(this_).find('.flcb_popup img').height() + 10
               });
 
-              // TODO: This has to do with the love option?
               $.ajax({
                 url: likeUrl,
                 dataType: "json",
@@ -102,8 +101,11 @@ var FLCB = function() {
                 $.ajax({
                   url: $(this_).data('href'),
                   type: 'post',
-                  success: function() {
-                    $(this_).toggleClass('liked');
+                  dataType: "text",
+                  success: function(data) {
+                    if (data == "Successful.") {
+                      $(this_).toggleClass('liked');
+                    }
                   }
                 });
 
@@ -135,7 +137,6 @@ var FLCB = function() {
       // Skip if there aren't any img elements,
       // or if it's an avatar next to a "new comment" text box,
       // or if it's the "avatar missing" image.
-      //debugger;
       if ($(this_).children('img').length < 1 ||
           $(this_).hasClass('new_comment') ||
 	      $(this_).children('img').attr('src').indexOf('avatar_missing') > -1)
@@ -150,6 +151,7 @@ var FLCB = function() {
       // Story and K&P entries will cut off avatar pics. This fixes that.
       $(this_).parents('.story').addClass('flcb_overflowfix');
       $(this_).parents('.kpbox').addClass('flcb_overflowfix');
+      $(this_).parents('.fl-overflow--hidden').addClass('flcb_overflowfix');
 
       // Change the filename to use the large version. Strip the query.
       var src = $(this_).children('img').attr('src');
@@ -170,7 +172,6 @@ var FLCB = function() {
       var imageHtml = '<img src="' + src + '" />';
 
       // Add the popup.
-      //debugger;
       $(this_).prepend('<div class="flcb_popup"></div>');
 
       // Load the full-size image first, then ...
@@ -189,8 +190,7 @@ var FLCB = function() {
     };
 
     var avatar_hover_off = function() {
-        // TODO: Is this for when we roll off the image?
-        $(this).children('.flcb_popup').hide();
+      $(this).children('.flcb_popup').hide();
     };
 
     $('.fl-likes-section__list').find('a').hover(
@@ -211,7 +211,7 @@ css += ".flcb_popup em:hover { color: #999999; }";
 css += ".flcb_popup em:active { -moz-transform: scale(0.8); -webkit-transform: scale(0.8); transform: scale(0.8); }";
 css += ".flcb_popup em.liked { color: #DD0000; }";
 css += ".kpbox.flcb_overflowfix { overflow: visible; }";
-css += ".story.flcb_overflowfix { overflow: visible !important; }";
+css += ".story.flcb_overflowfix, .fl-overflow--hidden.flcb_overflowfix { overflow: visible !important; }";
 css += ".flcb_user { position: relative; }";
 css += ".flcb_user img { max-width: 400px; }";
 
@@ -221,4 +221,3 @@ $(document).ready(function(){
 
   $('head').append('<style type="text/css">' + css + '</style>');
 });
-
