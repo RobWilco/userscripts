@@ -5,7 +5,7 @@
 // @namespace   robwilco.fetlife.lightbox
 // @license     GNU GPLv3
 // @include     https://fetlife.com/*
-// @version     1.0.5
+// @version     1.0.6
 // ==/UserScript==
 
 // Based on FetLife Lightbox by wjw_
@@ -13,11 +13,9 @@
 
 var FLCB = function() {
   this.update = function() {
-    // Popup border
-    var border = 10;
-
     var picture_hover_on = function() {
       var this_ = this;
+      var border = 10;
 
       // Skip links that ...
       // refer to comment fragments,
@@ -146,6 +144,7 @@ var FLCB = function() {
     // avatar preview
     var avatar_hover_on = function() {
       var this_ = this;
+      var border = 6;
 
       $(this).addClass('flcb_user');
 
@@ -176,10 +175,10 @@ var FLCB = function() {
       src = src.substring(0, src.indexOf('?'));
 
       // TODO: Is this ever used? flcb_popup hasn't been added yet!
-      // Make the popup be the size of the image with a 6px margin
+      // Make the popup be the size of the image with a border-width margin
       $(this).find('.flcb_popup').css({
-        width: $(this_).children('img').width() + 6,
-        height: $(this_).children('img').height() + 6
+        width: $(this_).children('img').width() + border,
+        height: $(this_).children('img').height() + border
       });
 
       // Create a title and image for the avatar.
@@ -210,7 +209,7 @@ var FLCB = function() {
           var thumbnail_width = $(this_).find('.flcb_popup+img').width();
           var popup_offset = popup_width - (thumbnail_width + border);
           $(this_).find('.flcb_popup').css({
-            left: popup_offset
+            left: -popup_offset
           });
         }
       };
