@@ -5,7 +5,7 @@
 // @namespace   robwilco.fetlife.lightbox
 // @license     GNU GPLv3
 // @include     https://fetlife.com/*
-// @version     1.0.4
+// @version     1.0.5
 // ==/UserScript==
 
 // Based on FetLife Lightbox by wjw_
@@ -13,6 +13,9 @@
 
 var FLCB = function() {
   this.update = function() {
+    // Popup border
+    var border = 10;
+
     var picture_hover_on = function() {
       var this_ = this;
 
@@ -37,10 +40,10 @@ var FLCB = function() {
       // Add the popup markup.
       $(this_).prepend('<div class="flcb_popup"></div>');
 
-      // Make the popup be the size of the image with a 10px margin
+      // Make the popup be the size of the image with a border-width margin
       $(this_).find('.flcb_popup').css({
-        width: $(this).children('img').width() + 10,
-        height: $(this).children('img').height() + 10
+        width: $(this).children('img').width() + border,
+        height: $(this).children('img').height() + border
       });
 
       // Add the overflow fix to K&P's box
@@ -75,11 +78,23 @@ var FLCB = function() {
               // Add the markup to the popup. The image will now appear immediately.
               $(this_).find('.flcb_popup').html(titleHtml + imageHtml + likeHtml);
 
-              // Set the popup dimensions to match the image plus a 10px border.
+              // Set the popup dimensions to match the image plus a border.
               $(this_).find('.flcb_popup').css({
-                width: $(this_).find('.flcb_popup img').width() + 10,
-                height: $(this_).find('.flcb_popup img').height() + 10
+                width: $(this_).find('.flcb_popup img').width() + border,
+                height: $(this_).find('.flcb_popup img').height() + border
               });
+
+              // If the image would be cut off on the right, adjust the offset.
+              var left_offset = $(this_).find('.flcb_popup').offset().left;
+              var window_width = $(window).width();
+              var popup_width = $(this_).find('.flcb_popup').width();
+              if (left_offset + popup_width > window_width) {
+                var thumbnail_width = $(this_).find('.flcb_popup+img').width();
+                var popup_offset = popup_width - (thumbnail_width + border);
+                $(this_).find('.flcb_popup').css({
+                  left: -popup_offset
+                });
+              }
 
               $.ajax({
                 url: likeUrl,
@@ -183,9 +198,21 @@ var FLCB = function() {
 
         // Set the popup dimensions to match the image plus a 10px border.
         $(this_).find('.flcb_popup').css({
-          width: $(this_).find('.flcb_popup img').width() + 10,
-          height: $(this_).find('.flcb_popup img').height() + 10
+          width: $(this_).find('.flcb_popup img').width() + border,
+          height: $(this_).find('.flcb_popup img').height() + border
         });
+
+        // If the image would be cut off on the right, adjust the offset.
+        var left_offset = $(this_).find('.flcb_popup').offset().left;
+        var window_width = $(window).width();
+        var popup_width = $(this_).find('.flcb_popup').width();
+        if (left_offset + popup_width > window_width) {
+          var thumbnail_width = $(this_).find('.flcb_popup+img').width();
+          var popup_offset = popup_width - (thumbnail_width + border);
+          $(this_).find('.flcb_popup').css({
+            left: popup_offset
+          });
+        }
       };
     };
 
