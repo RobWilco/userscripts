@@ -5,7 +5,7 @@
 // @namespace   robwilco.fetlife.lightbox
 // @license     GNU GPLv3
 // @include     https://fetlife.com/*
-// @version     1.0.6
+// @version     1.0.7
 // ==/UserScript==
 
 // Based on FetLife Lightbox by wjw_
@@ -13,6 +13,20 @@
 
 var FLCB = function() {
   this.update = function() {
+
+    // If the popup would be cut off on the right, adjust the offset.
+    var ensure_positioning = function(element, border) {
+      var left_offset = $(element).find('.flcb_popup').offset().left;
+      var window_width = $(window).width();
+      var popup_width = $(element).find('.flcb_popup').width();
+      if (left_offset + popup_width > window_width) {
+        var thumbnail_width = $(element).find('.flcb_popup+img').width();
+        var popup_offset = popup_width - (thumbnail_width + border);
+        var top_offset = $(element).find('.flcb_popup').offset().top;
+        $(element).find('.flcb_popup').offset({top: top_offset, left: left_offset-popup_offset});
+      }
+    };
+
     var picture_hover_on = function() {
       var this_ = this;
       var border = 10;
@@ -82,17 +96,8 @@ var FLCB = function() {
                 height: $(this_).find('.flcb_popup img').height() + border
               });
 
-              // If the image would be cut off on the right, adjust the offset.
-              var left_offset = $(this_).find('.flcb_popup').offset().left;
-              var window_width = $(window).width();
-              var popup_width = $(this_).find('.flcb_popup').width();
-              if (left_offset + popup_width > window_width) {
-                var thumbnail_width = $(this_).find('.flcb_popup+img').width();
-                var popup_offset = popup_width - (thumbnail_width + border);
-                $(this_).find('.flcb_popup').css({
-                  left: -popup_offset
-                });
-              }
+              // Ensure positioning stays within the window.
+              ensure_positioning(this_, border);
 
               $.ajax({
                 url: likeUrl,
@@ -201,17 +206,8 @@ var FLCB = function() {
           height: $(this_).find('.flcb_popup img').height() + border
         });
 
-        // If the image would be cut off on the right, adjust the offset.
-        var left_offset = $(this_).find('.flcb_popup').offset().left;
-        var window_width = $(window).width();
-        var popup_width = $(this_).find('.flcb_popup').width();
-        if (left_offset + popup_width > window_width) {
-          var thumbnail_width = $(this_).find('.flcb_popup+img').width();
-          var popup_offset = popup_width - (thumbnail_width + border);
-          $(this_).find('.flcb_popup').css({
-            left: -popup_offset
-          });
-        }
+        // Ensure positioning stays within the window.
+        ensure_positioning(this_, border);
       };
     };
 
